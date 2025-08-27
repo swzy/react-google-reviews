@@ -37,7 +37,7 @@ SOFTWARE. */
 
 .slick-track {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
 }
 
 .slick-loading .slick-list
