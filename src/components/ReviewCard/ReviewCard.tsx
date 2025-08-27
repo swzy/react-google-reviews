@@ -563,6 +563,10 @@ const ReviewCardReviewer: React.FC<
         }
     };
 
+    const openReviewUrl = (url: string) => {
+        window.open(url, '_blank');
+    }
+
     return (
         <div
             css={reviewer}
@@ -573,6 +577,7 @@ const ReviewCardReviewer: React.FC<
                 css={reviewerProfile}
                 className={reviewerProfileClassName}
                 style={reviewerProfileStyle}
+                onClick={() => openReviewUrl(review.reviewer.reviewUrl ?? "")}
             >
                 {!review.reviewer.isAnonymous &&
                     review.reviewer.profilePhotoUrl && (

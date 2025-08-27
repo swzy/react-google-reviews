@@ -12,7 +12,6 @@ import {
 } from "../../types/cssProps";
 import {
     DateDisplay,
-    FeaturableAPIResponse,
     GoogleReview,
     LogoVariant,
     NameDisplay,
@@ -27,14 +26,12 @@ import { LoadingState } from "../State/LoadingState";
 type StructuredDataProps = {
     /**
      * Total number of reviews.
-     * This is automatically fetched when passing `featurableId`.
      * Required if `structuredData` is true and passing `reviews`.
      */
     totalReviewCount?: number;
 
     /**
      * Average star rating from 1 to 5.
-     * This is automatically fetched when passing `featurableId`.
      * Required if `structuredData` is true and passing `reviews`.
      */
     averageRating?: number;
@@ -44,7 +41,7 @@ type ReactGoogleReviewsBaseProps = {
     /**
      * Layout of the reviews.
      */
-    layout: "carousel" | "badge" | "custom";
+    layout: "carousel" | "badge";
 
     /**
      * How to display the reviewer's name.
@@ -143,7 +140,6 @@ type ReactGoogleReviewsWithPlaceIdBaseProps =
          * Note: the Places API limits the number of reviews to FIVE most recent reviews.
          */
         reviews: GoogleReview[];
-        featurableId?: never;
 
         /**
          * Controls the loading state of the component when fetching reviews manually.
@@ -166,24 +162,10 @@ type ReactGoogleReviewsWithPlaceIdProps =
             | ReactGoogleReviewsWithPlaceIdWithoutStructuredDataProps
         );
 
-type ReactGoogleReviewsWithFeaturableIdProps =
-    ReactGoogleReviewsBaseProps & {
-        reviews?: never;
-        /**
-         * If using Featurable API, pass the ID of the widget after setting it up in the dashboard.
-         * Using the free Featurable API allows for unlimited reviews.
-         * https://featurable.com/app/widgets
-         */
-        featurableId: string;
-
-        isLoading?: never;
-    };
-
 type ReactGoogleReviewsBasePropsWithRequired =
     ReactGoogleReviewsBaseProps &
         (
             | ReactGoogleReviewsWithPlaceIdProps
-            | ReactGoogleReviewsWithFeaturableIdProps
         ) &
         ErrorStateCSSProps &
         LoadingStateCSSProps;
@@ -247,7 +229,6 @@ type ReactGoogleReviewsBadgeProps =
 
         /**
          * Google profile URL, if manually fetching Google Places API and passing `reviews`.
-         * This is automatically fetched when passing `featurableId`.
          */
         profileUrl?: string;
 
@@ -266,15 +247,8 @@ type ReactGoogleReviewsBadgeProps =
         ) => string;
     } & BadgeCSSProps;
 
-type ReactGoogleReviewsCustomProps =
-    ReactGoogleReviewsBasePropsWithRequired & {
-        layout: "custom";
-        renderer: (reviews: GoogleReview[]) => React.ReactNode;
-    };
-
 type ReactGoogleReviewsProps =
     | ReactGoogleReviewsCarouselProps
-    | ReactGoogleReviewsCustomProps
     | ReactGoogleReviewsBadgeProps;
 
 const parent = css`
@@ -361,40 +335,10 @@ const ReactGoogleReviews: React.FC<ReactGoogleReviewsProps> = ({
             setReviews(
                 props.reviews.filter(filterReviews).map(mapReviews)
             );
+            setLoading(false);
+            setError(false);
         }
     }, [props.reviews, filterReviews, mapReviews]);
-
-    useEffect(() => {
-        if (props.featurableId) {
-            fetch(
-                `https://featurable.com/api/v1/widgets/${props.featurableId}`,
-                {
-                    method: "GET",
-                }
-            )
-                .then((res) => res.json())
-                .then((data: FeaturableAPIResponse) => {
-                    if (!data.success) {
-                        setError(true);
-                        return;
-                    }
-                    setReviews(
-                        data.reviews
-                            .filter(filterReviews)
-                            .map(mapReviews)
-                    );
-                    setProfileUrl(data.profileUrl);
-                    setTotalReviewCount(data.totalReviewCount);
-                    setAverageRating(data.averageRating);
-                })
-                .catch(() => {
-                    setError(true);
-                })
-                .finally(() => setLoading(false));
-        } else {
-            setLoading(false);
-        }
-    }, [props.featurableId, filterReviews, mapReviews]);
 
     if (
         (loading && typeof props.isLoading === "undefined") ||
@@ -729,8 +673,6 @@ const ReactGoogleReviews: React.FC<ReactGoogleReviewsProps> = ({
                     badgeLinkInlineStyle={props.badgeLinkInlineStyle}
                 />
             )}
-
-            {props.layout === "custom" && props.renderer(reviews)}
         </div>
     );
 };

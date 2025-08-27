@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { ReactGoogleReviews } from "../src";
+import EXAMPLE_REVIEWS from "../src/static/examples";
 
 const App: React.FC<{}> = () => {
     return (
@@ -8,11 +9,14 @@ const App: React.FC<{}> = () => {
             <h1>React Google Reviews Example</h1>
             <ReactGoogleReviews
                 layout="carousel"
-                featurableId="example"
+                reviews={EXAMPLE_REVIEWS}
             />
             <ReactGoogleReviews
                 layout="badge"
-                featurableId="example"
+                badgeLabel="Your Business Reviews"
+                averageRating={4.5}
+                totalReviewCount={150}
+                reviews={EXAMPLE_REVIEWS}
             />
         </div>
     );

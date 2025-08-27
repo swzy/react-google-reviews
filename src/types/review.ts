@@ -1,6 +1,7 @@
 export type GoogleReview = {
     reviewId: string | null;
     reviewer: {
+        reviewUrl: string | null;
         profilePhotoUrl: string;
         displayName: string;
         isAnonymous: boolean;
@@ -30,29 +31,3 @@ export type DateDisplay = "relative" | "absolute" | "none";
 export type ReviewVariant = "testimonial" | "card";
 
 export type Theme = "light" | "dark";
-
-interface FeaturableAPIResponseBase {
-    success: boolean;
-}
-
-interface FeaturableAPIResponseSuccess
-    extends FeaturableAPIResponseBase {
-    success: true;
-    profileUrl: string | null;
-    batchSize: number;
-    totalReviewCount: number;
-    averageRating: number;
-    reviews: GoogleReview[];
-}
-
-interface FeaturableAPIResponseError
-    extends FeaturableAPIResponseBase {
-    success: false;
-}
-
-export type FeaturableAPIResponse =
-    | FeaturableAPIResponseSuccess
-    | FeaturableAPIResponseError;
-
-// Force type into value space to avoid type-only export incompatibility
-export const FeaturableAPIResponse = {} as const;

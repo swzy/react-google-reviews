@@ -60,7 +60,6 @@ export const LoadingState: FC<
         >
             <svg
                 role={"status"}
-                aria-hidden="true"
                 css={loaderSpinner}
                 focusable="false"
                 viewBox="0 0 100 101"

@@ -281,7 +281,6 @@ export const Badge: FC<BadgeProps & BadgeCSSProps> = ({
                         </span>
                         <div
                             css={badgeStars}
-                            aria-hidden="true"
                             className={badgeStarsClassName}
                             style={badgeStarsStyle}
                         >

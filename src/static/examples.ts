@@ -4,6 +4,7 @@ export const EXAMPLE_REVIEWS: ReactGoogleReview[] = [
     {
         reviewId: "1",
         reviewer: {
+            reviewUrl: null,
             displayName: "Isabella Harris",
             profilePhotoUrl: "",
             isAnonymous: false,
@@ -17,6 +18,7 @@ export const EXAMPLE_REVIEWS: ReactGoogleReview[] = [
     {
         reviewId: "2",
         reviewer: {
+            reviewUrl: null,
             displayName: "Sophia Moore",
             profilePhotoUrl: "",
             isAnonymous: false,
@@ -30,6 +32,7 @@ export const EXAMPLE_REVIEWS: ReactGoogleReview[] = [
     {
         reviewId: "3",
         reviewer: {
+            reviewUrl: null,
             displayName: "John Doe",
             profilePhotoUrl: "",
             isAnonymous: false,
@@ -43,6 +46,7 @@ export const EXAMPLE_REVIEWS: ReactGoogleReview[] = [
     {
         reviewId: "4",
         reviewer: {
+            reviewUrl: null,
             displayName: "Emily Davis",
             profilePhotoUrl: "",
             isAnonymous: false,
@@ -56,6 +60,7 @@ export const EXAMPLE_REVIEWS: ReactGoogleReview[] = [
     {
         reviewId: "5",
         reviewer: {
+            reviewUrl: null,
             displayName: "David Wilson",
             profilePhotoUrl: "",
             isAnonymous: false,
@@ -69,6 +74,7 @@ export const EXAMPLE_REVIEWS: ReactGoogleReview[] = [
     {
         reviewId: "6",
         reviewer: {
+            reviewUrl: null,
             displayName: "Jessica Brown",
             profilePhotoUrl: "",
             isAnonymous: false,
@@ -80,3 +86,5 @@ export const EXAMPLE_REVIEWS: ReactGoogleReview[] = [
         updateTime: new Date().toISOString(),
     },
 ];
+
+export default EXAMPLE_REVIEWS;
